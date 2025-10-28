@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namaz Vakitleri</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="manifest" href="manifest.json">
+    
+    <meta name="theme-color" content="#1a293f">
+    
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker kaydedildi: ', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('ServiceWorker kaydı başarısız: ', error);
+                    });
+            });
+        }
+    </script>
+    </head>
+<body>
+
+    <header>
+        <h1>Namaz Vakitleri</h1>
+        <p class="saat" id="anlik-saat">--:--:--</p>
+        <p class="tarih" id="tarih-bilgisi">-- ---- ----</p>
+    </header>
+
+    <main>
+        <section class="konum-secici">
+            <label for="sehirler">Şehir Seçin:</label>
+            <select id="sehirler">
+                <option value="" disabled selected>İller Yükleniyor...</option>
+            </select>
+        </section>
+
+        <section class="kalan-sure">
+            <h2>
+                <span id="sonraki-vakit-isim">--</span> Vaktine Kalan Süre:
+            </h2>
+            <p id="kalan-zaman">--:--:--</p>
+        </section>
+
+        <section class="vakit-kartlari">
+            <div class="kart" id="imsak">
+                <h2>İmsak</h2>
+                <p data-vakit="imsak">--:--</p>
+            </div>
+            <div class="kart" id="gunes">
+                <h2>Güneş</h2>
+                <p data-vakit="gunes">--:--</p>
+            </div>
+            <div class="kart" id="ogle">
+                <h2>Öğle</h2>
+                <p data-vakit="ogle">--:--</p>
+            </div>
+            <div class="kart" id="ikindi">
+                <h2>İkindi</h2>
+                <p data-vakit="ikindi">--:--</p>
+            </div>
+            <div class="kart" id="aksam">
+                <h2>Akşam</h2>
+                <p data-vakit="aksam">--:--</p>
+            </div>
+            <div class="kart" id="yatsi">
+                <h2>Yatsı</h2>
+                <p data-vakit="yatsi">--:--</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
