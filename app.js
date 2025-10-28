@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'yatsi': 'Yatsı'
     };
 
-    // YENİ DÜZELTME: API için Türkçe karakterleri dönüştüren fonksiyon
+    // API için Türkçe karakterleri dönüştüren fonksiyon (Değişiklik yok)
     function apiValueFormatla(ilAdi) {
         return ilAdi
             .toLocaleLowerCase('tr-TR') // Önce hepsini küçük harf yap
@@ -51,31 +51,28 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/ç/g, 'c');
     }
 
-    // FİNAL GÜNCELLEMESİ: İlleri lokal listeden yükle (DÜZELTİLMİŞ)
+    // GÜNCELLENDİ: İlleri lokal listeden yükle
     function illeriLokaldenYukle() {
         console.log("İller lokal listeden yükleniyor...");
         sehirSelect.innerHTML = ""; // "İller Yükleniyor..." seçeneğini temizle
 
         TURKIYE_ILLERI.forEach(ilAdi => {
             const option = document.createElement('option');
-            
-            // DÜZELTME: API'nin anlayacağı 'value' formatı için yeni fonksiyonu kullan
             const ilValue = apiValueFormatla(ilAdi);
             
             option.value = ilValue;
-            option.textContent = ilAdi; // Menüde "Muğla", "Düzce" vs. görünecek
-
-            if (ilValue === "ankara") {
-                option.selected = true;
-            }
+            option.textContent = ilAdi; 
+            
+            // GÜNCELLENDİ: Ankara'yı otomatik seçme kodunu buradan kaldırdık.
+            // Bu seçimi artık "UYGULAMAYI BAŞLATMA" bölümü yapacak.
             
             sehirSelect.appendChild(option);
         });
-        console.log("81 il başarıyla yüklendi ve formatlandı.");
+        console.log("81 il başarıyla yüklendi.");
     }
 
 
-    // 2. Ana Fonksiyon: API'den Veri Çekme (Optimizasyonlu)
+    // 2. Ana Fonksiyon: API'den Veri Çekme (Değişiklik yok)
     async function vakitleriGetir(sehir) {
         
         const bugun = new Date();
@@ -109,7 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                // Hata mesajını daha anlaşılır hale getirdim
                 throw new Error(`API yanıt vermedi (Şehir: ${sehir}): ${response.status} ${response.statusText}`);
             }
 
@@ -136,10 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // 3. Veriyi Ekrana Basma Fonksiyonu
+    // 3. Veriyi Ekrana Basma Fonksiyonu (Değişiklik yok)
     function ekranaBas(vakitler) {
         vakitP_elementleri.forEach(p_elementi => {
-            // DÜZELTME: HTML'deki 'data_vakit' yazım hatasını 'data-vakit' olarak düzelttim
             const dataVakitAdi = p_elementi.getAttribute('data-vakit'); 
             const apiVakitAdi = vakitEslesme[dataVakitAdi];
             const bulunanVakit = vakitler.find(v => v.vakit === apiVakitAdi);
@@ -153,45 +148,66 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // 4. Tarihi Güncelleme Fonksiyonu
+    // 4. Tarihi Güncelleme Fonksiyonu (Değişiklik yok)
     function tarihiGuncelle() {
         const bugun = new Date();
         const secenekler = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         tarihBilgisi.textContent = bugun.toLocaleDateString('tr-TR', secenekler);
     }
 
-    // 5. Anlık Saati Güncelleme Fonksiyonu
+    // 5. Anlık Saati Güncelleme Fonksiyonu (Değişiklik yok)
     function saatiGuncelle() {
         const simdi = new Date();
         anlikSaat.textContent = simdi.toLocaleTimeString('tr-TR');
     }
 
 
-    // 6. Olay Dinleyicisi
+    // 6. GÜNCELLENDİ: Olay Dinleyicisi (Şehri Hafızaya Alma)
     sehirSelect.addEventListener('change', () => {
         const secilenSehir = sehirSelect.value;
+        
+        // YENİ: Kullanıcının seçimini tarayıcının hafızasına kaydet
+        localStorage.setItem('sonSecilenSehir', secilenSehir);
+        console.log(`Yeni şehir hafızaya kaydedildi: ${secilenSehir}`);
+        
         vakitleriGetir(secilenSehir);
     });
 
 
-    // --- UYGULAMAYI BAŞLATMA ---
+    // --- GÜNCELLENDİ: UYGULAMAYI BAŞLATMA (Hafızadan Okuma) ---
     
     tarihiGuncelle();
     saatiGuncelle();
     setInterval(saatiGuncelle, 1000); 
 
-    // Önce 81 ili lokal listeden yükle
+    // Önce 81 ili lokal listeden yükle (hiçbirini seçili yapmadan)
     illeriLokaldenYukle();
     
-    // İller yüklendikten sonra, menüde o an seçili olan şehrin (Ankara) vakitlerini getir
-    const baslangicSehri = sehirSelect.value;
+    // YENİ: Hafızadaki şehri kontrol et
+    const kayitliSehir = localStorage.getItem('sonSecilenSehir');
+    let baslangicSehri;
+
+    if (kayitliSehir) {
+        // Hafızada bir şehir varsa onu kullan
+        baslangicSehri = kayitliSehir;
+        console.log(`Hafızadan yüklenen şehir: ${baslangicSehri}`);
+    } else {
+        // Hafızada bir şehir yoksa (ilk ziyaret), Ankara'yı varsayılan yap
+        baslangicSehri = 'ankara';
+        console.log("İlk ziyaret, varsayılan şehir Ankara olarak ayarlandı.");
+    }
+    
+    // Menüde doğru şehrin görünmesini sağla
+    sehirSelect.value = baslangicSehri;
+
+    // O şehrin vakitlerini getir
     vakitleriGetir(baslangicSehri);
     
     // --- Başlatma bitti ---
 
 
     
-    // Geri Sayım Fonksiyonu
+    // Geri Sayım Fonksiyonu (Değişiklik yok)
     function kalanSureyiHesapla(vakitler) {
         if (geriSayimInterval) clearInterval(geriSayimInterval);
 
