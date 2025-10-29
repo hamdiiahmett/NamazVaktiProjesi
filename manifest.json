@@ -4,6 +4,7 @@
     "description": "Ahmet'in yaptığı namaz vakitleri uygulaması.",
     "start_url": ".",
     "display": "standalone",
+    "display_override": ["fullscreen", "minimal-ui"],
     "background_color": "#0c1a2e",
     "theme_color": "#1a293f",
     "icons": [
