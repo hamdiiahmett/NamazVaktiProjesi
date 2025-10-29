@@ -1,7 +1,5 @@
-/* Google Fonts'tan şık bir font alıyoruz (Poppins) */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-/* 1. Genel Ayarlar (Tüm sayfa) */
 * {
     margin: 0;
     padding: 0;
@@ -10,38 +8,33 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    /* Taslaktaki ana koyu-mavi/teal arka plan */
     background-color: #0c1a2e; 
-    color: #ffffff; /* Genel yazı rengi beyaz */
+    color: #ffffff; 
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* İçeriği üste yasla */
+    justify-content: flex-start; 
     min-height: 100vh;
-    padding: 20px; /* Kenarlardan boşluk */
+    padding: 20px; 
 }
 
-/* 2. Başlık, Saat ve Tarih Alanı (HTML'deki <header>) */
-/* Burası senin Yeşil Çizgi ile işaretlediğin alana karşılık geliyor */
 header {
     text-align: center;
     width: 100%;
-    max-width: 400px; /* Ana kutuyla aynı genişlikte olsun */
+    max-width: 400px; 
     margin-bottom: 20px;
 }
 
 header h1 {
-    /* Taslaktaki "HAYIRLI" yazısı gibi büyük bir başlık */
-    color: #f0c420; /* Altın sarısı */
+    color: #f0c420; 
     font-size: 2.2rem;
     font-weight: 700;
 }
 
-/* Yeşil Çizgi Alanı (Saat ve Tarih) */
 header .saat {
     font-size: 2rem;
     font-weight: 600;
-    color: #f0c420; /* Vurgulu sarı */
+    color: #f0c420; 
     line-height: 1.2;
 }
 
@@ -51,23 +44,20 @@ header .tarih {
     font-weight: 300;
 }
 
-/* 3. Ana İçerik Kutusu (HTML'deki <main>) */
 main {
     width: 100%;
     max-width: 400px;
-    /* Taslaktaki köşeleri yuvarlak, daha koyu kutu */
     background-color: #1a293f; 
     border-radius: 20px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-/* 4. Konum Seçici (Mavi Çizgi) */
 .konum-secici {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #3a4c63; /* Ayırıcı çizgi */
+    border-bottom: 1px solid #3a4c63; 
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
@@ -81,17 +71,16 @@ main {
     padding: 8px 12px;
     border-radius: 8px;
     border: none;
-    background-color: #0c1a2e; /* Arka planla aynı renk */
+    background-color: #0c1a2e; 
     color: white;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     cursor: pointer;
 }
 
-/* 5. Kalan Süre (Mor/Kırmızı Çizgi) */
 .kalan-sure {
     text-align: center;
-    background-color: #0c1a2e; /* Koyu arka plan */
+    background-color: #0c1a2e; 
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 25px;
@@ -115,24 +104,20 @@ main {
     letter-spacing: 2px;
 }
 
-/* 6. Vakit Kartları (Taslaktaki Liste Görünümü) */
-/* Kart görünümünden liste görünümüne geçiyoruz */
 .vakit-kartlari {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Vakitler arası boşluk */
+    gap: 12px; 
 }
 
 .vakit-kartlari .kart {
-    /* Taslaktaki gibi (imsak : 05:30) yan yana */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 5px; /* İç boşluk */
-    border-bottom: 1px solid #3a4c63; /* Ayırıcı çizgi */
+    padding: 10px 5px; 
+    border-bottom: 1px solid #3a4c63; 
 }
 
-/* Sonuncu kartın alt çizgisini kaldır */
 .vakit-kartlari .kart:last-child {
     border-bottom: none;
 }
@@ -146,5 +131,5 @@ main {
 .vakit-kartlari .kart p {
     font-size: 1.1rem;
     font-weight: 400;
-    color: #f0c420; /* Vakitleri sarı yapalım */
+    color: #f0c420; 
 }
